@@ -2,7 +2,11 @@
   "name": "agate",
   "version": "0.1.0",
   "description": "coffeescript modules",
-  "main": "index.js",
+  "main": "dist/agate.js",
+  "files": [
+    "dist/agate.min.js",
+    "src"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,5 +29,22 @@
     "marked": "^0.3.5",
     "teacup": "^2.0.0",
     "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^0.1.10",
+    "coffee-loader": "^0.7.2",
+    "coffee-script": "^1.10.0",
+    "gulp": "^3.9.1",
+    "gulp-coffee": "^2.3.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-jshint": "^2.0.1",
+    "gulp-nodemon": "^2.1.0",
+    "gulp-size": "^2.1.0",
+    "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.7",
+    "jshint": "^2.9.2",
+    "stats-webpack-plugin": "^0.4.0",
+    "webpack": "^1.13.1",
+    "webpack-manifest-plugin": "^1.0.1"
   }
 }
