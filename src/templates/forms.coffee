@@ -1,5 +1,7 @@
 tc = require 'teacup'
 
+{ capitalize } = require 'agate/src/apputil'
+
 
 ########################################
 # Form Templates
@@ -18,26 +20,50 @@ form_group_input_div = tc.renderable (data) ->
         tc.text data?.content
     else
       input_type selector, atts
+
+make_field_input = (field) ->
+  tc.renderable (model) ->
+    form_group_input_div
+      input_id: "input_#{field}"
+      label: capitalize field
+      input_attributes:
+        name: field
+        placeholder: field
+        value: model[field]
     
-login_form = tc.renderable (user) ->
-  tc.form
-    role:'form'
-    method: 'POST'
-    action: '/login', ->
-      form_group_input_div
-        input_id: 'input_username'
-        label: 'User Name'
-        input_attributes:
-          name: 'username'
-          placeholder: 'User Name'
-      form_group_input_div
-        input_id: 'input_password'
-        label: 'Password'
-        input_attributes:
-          name: 'password'
-          type: 'password'
-          placeholder: 'Type your password here....'
-      tc.button '.btn.btn-default', type:'submit', 'login'
+make_field_textarea = (field) ->
+  tc.renderable (model) ->
+    form_group_input_div
+      input_id: "input_#{field}"
+      input_type: 'textarea'
+      label: capitalize field
+      input_attributes:
+        name: field
+        placeholder: field
+      content: model[field]
+      
+make_login_form = (action='/login', method='POST') -> 
+  tc.renderable (user) ->
+    tc.form
+      role:'form'
+      method: method
+      action: action, ->
+        form_group_input_div
+          input_id: 'input_username'
+          label: 'User Name'
+          input_attributes:
+            name: 'username'
+            placeholder: 'User Name'
+        form_group_input_div
+          input_id: 'input_password'
+          label: 'Password'
+          input_attributes:
+            name: 'password'
+            type: 'password'
+            placeholder: 'Type your password here....'
+        tc.button '.btn.btn-default', type:'submit', 'login'
+
+login_form = make_login_form()
 
 name_content_form = tc.renderable (model) ->
   form_group_input_div
@@ -58,5 +84,8 @@ name_content_form = tc.renderable (model) ->
 ########################################
 module.exports =
   form_group_input_div: form_group_input_div
+  make_field_input: make_field_input
+  make_field_textarea: make_field_textarea
+  make_login_form: make_login_form
   login_form: login_form
   name_content_form: name_content_form

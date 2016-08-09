@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 
 MainChannel = Backbone.Radio.channel 'global'
-#MessageChannel = Backbone.Radio.channel 'messages'
+MessageChannel = Backbone.Radio.channel 'messages'
 
 class User extends Backbone.Model
 
@@ -17,6 +17,13 @@ MainChannel.reply 'create-current-user-object', (url) ->
   # create current-user request
   MainChannel.reply 'current-user', ->
     currentuser
+  MainChannel.reply 'update-user-config', (config) ->
+    currentuser.set 'config', config
+    response = currentuser.save()
+    response.done =>
+      currentuser
+    response.fail =>
+      MessageChannel.request 'danger', 'failed to update user config!'
   currentuser
   
 

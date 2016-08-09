@@ -16,7 +16,6 @@ class BaseController extends Backbone.Marionette.Object
   navbar_set_active: Util.navbar_set_active
 
 class MainController extends BaseController
-  mainbus: MainChannel
   _get_region: (region) ->
     MainChannel.request 'main:app:get-region', region
 
@@ -30,26 +29,28 @@ class MainController extends BaseController
     sidebar
         
   _make_sidebar: ->
-    sidebar = @_empty_sidebar
+    sidebar = @_empty_sidebar()
     view = new @sidebarclass
       model: @sidebar_model
     sidebar.show view
     
-  _make_editbar: ->
-    #data = @root_doc.get 'data'
-    #user = data.relationships.meta.current_user
-    ##console.log "_make_editbar", data
-    editbar = @_get_region 'editbar'
-    user = null
-    # should have better way to check user?
-    if user and 'title' of user
-      view = new MainViews.EditBarView
-        model: @root_doc
-      editbar.show view
+  _show_view: (vclass, model) ->
+    view = new vclass
+      model: model
+    @_show_content view
+
+  _load_view: (vclass, model, objname) ->
+    if model.isEmpty()
+      response = model.fetch()
+      response.done =>
+        @_show_view vclass, model
+      response.fail =>
+        msg = "Failed to load #{objname} data."
+        MessageChannel.request 'danger', msg
     else
-      editbar.empty()
-
-
+      @_show_view vclass, model
+      
+    
 module.exports =
   BaseController: BaseController
   MainController: MainController

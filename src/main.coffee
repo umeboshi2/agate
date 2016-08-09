@@ -8,6 +8,8 @@ views = require './views'
 users = require './users'
 clipboard = require './clipboard'
 messages = require './messages'
+templates = require './templates/main'
+
 module.exports =
   app:
     initpage: initpage
@@ -20,4 +22,4 @@ module.exports =
   users: users
   clipboard: clipboard
   messages: messages
-  
+  templates: templates
