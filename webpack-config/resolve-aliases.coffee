@@ -14,7 +14,6 @@ module.exports =
   tablednd: 'TableDnD/js/jquery.tablednd.js'
   request: 'browser-request'
   'tag-it': 'tag-it/js/tag-it.js'
-  'radio-shim': path.join __dirname, 'radio-shim.coffee'
   phaser: phaser
   pixi: pixi
   p2: p2

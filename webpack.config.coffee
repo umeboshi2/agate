@@ -91,7 +91,7 @@ WebPackConfig =
   module:
     loaders: loaders
   resolve: resolve
-  externals: /^[a-z\-0-9]+$/
+  externals: /^[a-z\.\-0-9]+$/
   
 if BuildEnvironment is 'dev'
   #proxy = require './webpack-config/devserver-proxies'

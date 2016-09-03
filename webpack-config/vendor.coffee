@@ -5,7 +5,6 @@ module.exports = [
   'backbone.paginator'
   'backbone.radio'
   'backbone.validation'
-  'radio-shim'
   'bootstrap'
   'jquery'
   'teacup'
