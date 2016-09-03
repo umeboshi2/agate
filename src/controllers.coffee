@@ -18,7 +18,8 @@ class BaseController extends Backbone.Marionette.Object
 class MainController extends BaseController
   layoutClass: MainViews.DefaultAppletLayout
   _get_applet: ->
-    MainChannel.request 'main:app:get-region', 'applet'
+    app = MainChannel.request 'main:app:object'
+    app.getView().getRegion 'applet'
     
   setup_layout: ->
     @layout = new @layoutClass
