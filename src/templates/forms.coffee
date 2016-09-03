@@ -1,6 +1,6 @@
 tc = require 'teacup'
 
-{ capitalize } = require 'agate/src/apputil'
+{ capitalize } = require '../apputil'
 
 
 ########################################
