@@ -2,7 +2,6 @@ tc = require 'teacup'
 marked = require 'marked'
 
 
-{ modal_close_button } = require './buttons'
   
 { form_group_input_div } = require './forms'
 

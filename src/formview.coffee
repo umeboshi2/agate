@@ -2,7 +2,7 @@ _ = require 'underscore'
 Marionette = require 'backbone.marionette'
 Validation = require 'backbone.validation'
 
-class FormView extends Backbone.Marionette.ItemView
+class FormView extends Backbone.Marionette.View
   constructor: ->
     super
 

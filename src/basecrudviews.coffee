@@ -4,6 +4,7 @@ tc = require 'teacup'
 
 { navigate_to_url } = require './apputil'
 { show_modal } = require './regions'
+{ modal_close_button } = require './templates/buttons'
 
 MainChannel = Backbone.Radio.channel 'global'
 MessageChannel = Backbone.Radio.channel 'messages'
@@ -25,7 +26,7 @@ ConfirmDeleteTemplate = tc.renderable (model) ->
             modal_close_button 'Cancel'
     
 
-class ConfirmDeleteModal extends Backbone.Marionette.ItemView
+class ConfirmDeleteModal extends Backbone.Marionette.View
   template: ConfirmDeleteTemplate
   ui:
     confirm_delete: '#confirm-delete-button'
@@ -42,7 +43,7 @@ class ConfirmDeleteModal extends Backbone.Marionette.ItemView
     response.fail =>
       MessageChannel.request 'danger', "#{name} NOT deleted."
       
-class BaseItemView extends Backbone.Marionette.ItemView
+class BaseItemView extends Backbone.Marionette.View
   ui:
     edit_item: '.edit-item'
     delete_item: '.delete-item'

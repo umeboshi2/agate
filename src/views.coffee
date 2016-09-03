@@ -7,26 +7,43 @@ LayoutTemplates = require './templates/layout'
 MiscTemplates = require './templates/misc'
 MenuTemplates = require './templates/menus'
 
+{ BootstrapModalRegion } = require './regions'
+
 MainChannel = Backbone.Radio.channel 'global'
 MessageChannel = Backbone.Radio.channel 'messages'
 
-class MainPageLayout extends Backbone.Marionette.LayoutView
+class MainPageLayout extends Backbone.Marionette.View
   template: LayoutTemplates.MainFluidLayoutTemplate
-
-class BootstrapNavBarView extends Backbone.Marionette.LayoutView
+  regions:
+    messages: '#messages'
+    navbar: '#navbar-view-container'
+    #modal: '#modal'
+    modal: BootstrapModalRegion
+    applet: '#applet-content'
+    footer: '#footer'
+    
+    
+    
+class DefaultAppletLayout extends Backbone.Marionette.View
+  template: LayoutTemplates.make_sidebar_template()
+  regions:
+    sidebar: '#sidebar'
+    content: '#main-content'
+  
+class BootstrapNavBarView extends Backbone.Marionette.View
   template: NavTemplates.nav_pt
   regions:
-    #navbarview: '#navbar-view'
     usermenu: '#user-menu'
     mainmenu: '#main-menu'
+    
 
-class MainSearchFormView extends Backbone.Marionette.ItemView
+class MainSearchFormView extends Backbone.Marionette.View
   template: NavTemplates.nav_pt_search
 
-class UserMenuView extends Backbone.Marionette.ItemView
+class UserMenuView extends Backbone.Marionette.View
   template: MenuTemplates.user_menu
 
-class MessageView extends Backbone.Marionette.ItemView
+class MessageView extends Backbone.Marionette.View
   template:MiscTemplates.message_box
   ui:
     close_button: 'button.close'
@@ -45,6 +62,7 @@ class MessagesView extends Backbone.Marionette.CollectionView
   
 module.exports =
   MainPageLayout: MainPageLayout
+  DefaultAppletLayout: DefaultAppletLayout
   MainSearchFormView: MainSearchFormView
   BootstrapNavBarView: BootstrapNavBarView
   UserMenuView: UserMenuView

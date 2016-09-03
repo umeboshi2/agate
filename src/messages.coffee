@@ -14,11 +14,16 @@ main_message_collection = new BaseMessageCollection
 MessageChannel.reply 'messages', ->
   main_message_collection
 
-display_message = (msg, level, icon=false) ->
+display_message = (msg, level, icon=false) =>
   message = new BaseMessage
     content: msg
     level: level
     icon: icon
+  # FIXME make delay configurable
+  delay = 6000
+  unless level is 'danger'
+    destroy = -> main_message_collection.remove message
+    setTimeout destroy, delay
   main_message_collection.add message
   
 MessageChannel.reply 'display-message', (msg, lvl='info', icon=false) =>

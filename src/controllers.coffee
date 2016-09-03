@@ -16,10 +16,36 @@ class BaseController extends Backbone.Marionette.Object
   navbar_set_active: Util.navbar_set_active
 
 class MainController extends BaseController
+  layoutClass: MainViews.DefaultAppletLayout
+  _get_applet: ->
+    MainChannel.request 'main:app:get-region', 'applet'
+    
+  setup_layout: ->
+    @layout = new @layoutClass
+    #console.log "created layout", @layout
+    applet = @_get_applet()
+    if applet.hasView()
+      #console.log "applet has view"
+      applet.empty()
+    applet.show @layout
+
+  # use this method to create a layout only if
+  # needed, making routing withing the applet
+  # more efficient.
+  setup_layout_if_needed: ->
+    if @layout is undefined
+      #console.log 'layout is undefined'
+      @setup_layout()
+    else if @layout.isDestroyed
+      #console.log 'layout is destroyed ------>', @layout
+      @setup_layout()
+    
+  
   _get_region: (region) ->
-    MainChannel.request 'main:app:get-region', region
+    @layout.getRegion region
 
   _show_content: (view) ->
+    console.warn "_show_content is deprecated"
     content = @_get_region 'content'
     content.show view
 
@@ -29,6 +55,7 @@ class MainController extends BaseController
     sidebar
         
   _make_sidebar: ->
+    console.warn "_make_sidebar is deprecated"
     sidebar = @_empty_sidebar()
     view = new @sidebarclass
       model: @sidebar_model
@@ -40,7 +67,9 @@ class MainController extends BaseController
     @_show_content view
 
   _load_view: (vclass, model, objname) ->
-    if model.isEmpty()
+    # FIXME
+    # presume "id" is only attribute there if length is 1
+    if model.isEmpty() or Object.keys(model.attributes).length is 1
       response = model.fetch()
       response.done =>
         @_show_view vclass, model

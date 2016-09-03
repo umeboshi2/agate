@@ -14,7 +14,7 @@ sidebar_template = tc.renderable (model) ->
       'button-url':entry.url, ->
         tc.text entry.name          
 
-class BaseSideBarView extends Backbone.Marionette.ItemView
+class BaseSideBarView extends Backbone.Marionette.View
   template: sidebar_template
   events:
     'click .sidebar-entry-button': 'sidebar_button_pressed'

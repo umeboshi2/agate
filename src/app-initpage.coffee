@@ -1,10 +1,8 @@
 Backbone = require 'backbone'
 Marionette = require 'backbone.marionette'
-require 'radio-shim'
   
 require 'bootstrap'
 
-#Models = require './models'
 require './messages'
 
 Views = require './views'
@@ -15,33 +13,42 @@ MainChannel = Backbone.Radio.channel 'global'
 MessageChannel = Backbone.Radio.channel 'messages'
 
 initialize_page = (app) ->
-  regions = MainChannel.request 'main:app:regions'
+  #regions = MainChannel.request 'main:app:regions'
   appmodel = MainChannel.request 'main:app:appmodel'
   # create layout view
+  if appmodel.has 'appView'
+    AppView = appmodel.get 'appView'
+  else
+    AppView = Views.MainPageLayout
+    
   layout_opts = {}
   if appmodel.has 'layout_template'
     layout_opts.template = appmodel.get 'layout_template'
-  layout = new Views.MainPageLayout layout_opts
+  layout = new AppView layout_opts
   # set the main layout view to create and show
   # the navbar when it is shown.  This assures us
   # that the $el is present in the DOM. 
-  layout.on 'show', =>
-    if appmodel?.navbar_viewclass
-      nbclass = appmodel.navbar_viewclass
+  layout.on 'render', ->
+    # FIXME create footer view
+    # 
+    # This is used to get regions in the root layout
+    MainChannel.reply 'main:app:get-region', (region) ->
+      console.warn "Don't use this anymore->", 'main:app:get-region', region
+      app.getView().getRegion(region)
+      
+    if appmodel.has 'navbarView'
+      if __DEV__
+        console.log "using custom navbar_viewclass"
+      nbclass = appmodel.get 'navbarView'
     else
       nbclass = Views.BootstrapNavBarView
     navbar = new nbclass
       model: appmodel
-    navbar_region = regions.get 'navbar'
-    navbar_region.show navbar
+    layout.showChildView 'navbar', navbar
     messages = new Views.MessagesView
       collection: MessageChannel.request 'messages'
-    messages_region = regions.get 'messages'
-    messages_region.show messages
-  if __DEV__
-    app.layout = layout
-  # Show the main layout
-  mainview = regions.get 'mainview'
-  mainview.show layout
-
+    layout.showChildView 'messages', messages
+  
+  app.showView layout
+  
 module.exports = initialize_page

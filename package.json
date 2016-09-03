@@ -22,11 +22,11 @@
   "homepage": "https://github.com/umeboshi2/agate#readme",
   "dependencies": {
     "backbone": "^1.3.3",
-    "backbone.marionette": "^2.4.7",
-    "backbone.radio": "^1.0.5",
+    "backbone.marionette": "^3.0.0",
+    "backbone.radio": "^2.0.0",
     "backbone.validation": "^0.7.1",
     "jquery": "^2.1.4",
-    "marked": "^0.3.5",
+    "marked": "^0.3.6",
     "teacup": "^2.0.0",
     "underscore": "^1.8.3"
   },

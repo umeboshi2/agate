@@ -41,7 +41,20 @@ make_field_textarea = (field) ->
         name: field
         placeholder: field
       content: model[field]
-      
+
+make_field_select = (field, optlist) ->
+  tc.renderable (model) ->
+    tc.div '.form-group', ->
+      tc.label '.control-label',
+        for:"select_#{field}"
+      capitalize field
+    tc.select '.form-control', name:"select_#{field}", ->
+      for opt in optlist
+        if model[field] is opt
+          tc.option selected:null, value:opt, opt
+        else
+          tc.option value:opt, opt
+          
 make_login_form = (action='/login', method='POST') -> 
   tc.renderable (user) ->
     tc.form
@@ -86,6 +99,7 @@ module.exports =
   form_group_input_div: form_group_input_div
   make_field_input: make_field_input
   make_field_textarea: make_field_textarea
+  make_field_select: make_field_select
   make_login_form: make_login_form
   login_form: login_form
   name_content_form: name_content_form
