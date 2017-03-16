@@ -30,13 +30,13 @@ class MainController extends BaseController
     applet.show @layout
 
   # use this method to create a layout only if
-  # needed, making routing withing the applet
+  # needed, making routing within the applet
   # more efficient.
   setup_layout_if_needed: ->
     if @layout is undefined
       #console.log 'layout is undefined'
       @setup_layout()
-    else if @layout.isDestroyed
+    else if @layout.isDestroyed()
       #console.log 'layout is destroyed ------>', @layout
       @setup_layout()
     
