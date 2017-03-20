@@ -26,5 +26,12 @@
     "marked": "^0.3.6",
     "teacup": "^2.0.0",
     "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.12.4",
+    "gulp": "^3.9.1",
+    "gulp-coffee": "^2.3.4",
+    "gulp-size": "^2.1.0",
+    "gulp-sourcemaps": "^2.4.1"
   }
 }
