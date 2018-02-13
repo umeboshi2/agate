@@ -1,4 +1,10 @@
 # agate
+
+## DEAD!!!
+This project is dead, and is here to fulfill dependencies.
+New project:  https://github.com/umeboshi2/tbirds.git
+
+
 coffeescript modules
 
 ## Application Structure
